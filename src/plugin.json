@@ -1,0 +1,57 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/master/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "datasource",
+  "name": "lw-datasource",
+  "id": "lacework-lw-datasource",
+  "metrics": true,
+  "info": {
+    "description": "Lacework datasource plugin",
+    "author": {
+      "name": "Erik Wennerberg",
+      "url": "www.lacework.com"
+    },
+    "keywords": [
+      "lacework",
+      "cloud security",
+      "security"
+    ],
+    "logos": {
+      "small": "img/logo.png",
+      "large": "img/logo.png"
+    },
+    "links": [
+      {
+        "name": "Website",
+        "url": "https://github.com/grafana/grafana-starter-datasource"
+      },
+      {
+        "name": "License",
+        "url": "https://github.com/grafana/grafana-starter-datasource/blob/master/LICENSE"
+      }
+    ],
+    "screenshots": [],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=7.0.0",
+    "plugins": []
+  },
+  "logs": true,
+  "routes": [
+    {
+      "path": "__proxy",
+      "url": "{{.JsonData.uri}}"
+    },
+    {
+      "path": "__tokenproxy",
+      "url": "{{.JsonData.uri}}",
+      "headers": [
+        {
+          "name": "X-LW-UAKS",
+          "content": "{{.JsonData.apiSecret}}"
+        }
+      ]
+    }
+  ]
+}
